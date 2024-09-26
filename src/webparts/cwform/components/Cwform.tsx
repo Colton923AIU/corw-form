@@ -34,36 +34,34 @@ const schema = yup.object({
   StartDate: yup.date().required('Start Date is required'),
 
   // Conditional validation for 'Withdrawal'
-  Notes: yup
-    .string()
-    .when('CorW', (CorW, schema) =>
-      (CorW as unknown as string) === 'Withdrawal'
-        ? schema
-            .min(10, 'Must provide more detail')
-            .required('Notes are required for Withdrawal')
-        : schema.notRequired()
-    ),
-  DocumentedInNotes: yup
-    .string()
-    .when('CorW', (CorW, schema) =>
-      (CorW as unknown as string) === 'Withdrawal'
-        ? schema.required('Documented in Notes is required for Withdrawal')
-        : schema.notRequired()
-    ),
-  InstructorName: yup
-    .string()
-    .when('CorW', (CorW, schema) =>
-      (CorW as unknown as string) === 'Withdrawal'
-        ? schema.required('Instructor Name is required for Withdrawal')
-        : schema.notRequired()
-    ),
-  ESA: yup
-    .bool()
-    .when('CorW', (CorW, schema) =>
-      (CorW as unknown as string) === 'Withdrawal'
-        ? schema.required('ESA is required for Withdrawal')
-        : schema.notRequired()
-    ),
+  Notes: yup.string().when('CorW', {
+    is: (val: string) => val === 'Withdrawal',
+    then: () =>
+      yup
+        .string()
+        .min(10, 'Must provide more detail')
+        .required('Notes are required for Withdrawal'),
+  }),
+
+  DocumentedInNotes: yup.string().when('CorW', {
+    is: (val: string) => val === 'Withdrawal',
+    then: () =>
+      yup.string().required('Documented in Notes is required for Withdrawal'),
+    otherwise: () => yup.string().notRequired(),
+  }),
+
+  InstructorName: yup.string().when('CorW', {
+    is: (val: string) => val === 'Withdrawal',
+    then: () =>
+      yup.string().required('Instructor Name is required for Withdrawal'),
+    otherwise: () => yup.string().notRequired(),
+  }),
+
+  ESA: yup.bool().when('CorW', {
+    is: (val: string) => val === 'Withdrawal',
+    then: () => yup.bool().required('ESA is required for Withdrawal'),
+    otherwise: () => yup.bool().notRequired(),
+  }),
 });
 
 interface FormFields extends yup.InferType<typeof schema> {}
@@ -106,11 +104,9 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
       }
     )();
   };
-
   console.log('useForm Errors: ', errors);
 
   if (userData === null) return <>loading...</>;
-
   return (
     <section className={styles.cwform}>
       <h2>Cancel / Withdrawal Form</h2>
@@ -128,7 +124,8 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             { key: 'Withdrawal', text: 'Withdrawal' },
           ]}
           onChange={option => {
-            setValue('CorW', option?.text);
+            // setCorwState(option === 'Withdrawal' ? true : false)
+            setValue('CorW', option);
           }}
         />
         <ControlledTextField
@@ -149,7 +146,8 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           name="StartDate"
           label="Current Start Date"
         />
-        {watch('CorW') === 'Withdrawal' && (
+        {/* {corwState ? ( */}
+        {watch('CorW') === 'Withdrawal' ? (
           <>
             <ControlledTextField
               errorMessage={errors.Notes?.message}
@@ -186,7 +184,7 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
               ]}
             />
           </>
-        )}
+        ) : null}
         <ControlledPeoplePicker
           errorMessage={errors.AAFAAdvisor?.message}
           control={control}
