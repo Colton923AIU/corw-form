@@ -1,0 +1,224 @@
+import * as React from 'react';
+import styles from './Cwform.module.scss';
+import { ICwformWebPartProps } from '../CwformWebPart';
+import { useData } from '../hooks';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { PrimaryButton } from '@fluentui/react';
+import ControlledDatePicker from '../controlledFields/ControlledDatePicker/ControlledDatePicker';
+import ControlledDropdown from '../controlledFields/ControlledDropdown/ControlledDropdown';
+import ControlledPeoplePicker from '../controlledFields/ControlledPeoplePicker/ControlledPeoplePicker';
+import ControlledTextField from '../controlledFields/ControlledTextField/ControlledTextField';
+
+// User picks name, and validated as string.
+// On POST - first get user object from saved state.
+// POST saved state data
+const schema = yup.object({
+  // Fields required for both 'Cancel' and 'Withdrawal'
+  AAFAAdvisor: yup.string().required('AAFA Advisor is required'),
+  CDOA: yup.string().required('CDOA is required'),
+  DSM: yup.string().required('DSM is required'),
+  CorW: yup
+    .string()
+    .oneOf(
+      ['Cancel', 'Withdrawal'],
+      'Please select either Cancel or Withdrawal'
+    )
+    .required('Please select Cancel or Withdrawal'),
+  StudentId: yup.string().required('Student ID is required'),
+  StudentName: yup
+    .string()
+    .min(2, 'Must type full name')
+    .required('Student Name is required'),
+  StartDate: yup.date().required('Start Date is required'),
+
+  // Conditional validation for 'Withdrawal'
+  Notes: yup
+    .string()
+    .when('CorW', (CorW, schema) =>
+      (CorW as unknown as string) === 'Withdrawal'
+        ? schema
+            .min(10, 'Must provide more detail')
+            .required('Notes are required for Withdrawal')
+        : schema.notRequired()
+    ),
+  DocumentedInNotes: yup
+    .string()
+    .when('CorW', (CorW, schema) =>
+      (CorW as unknown as string) === 'Withdrawal'
+        ? schema.required('Documented in Notes is required for Withdrawal')
+        : schema.notRequired()
+    ),
+  InstructorName: yup
+    .string()
+    .when('CorW', (CorW, schema) =>
+      (CorW as unknown as string) === 'Withdrawal'
+        ? schema.required('Instructor Name is required for Withdrawal')
+        : schema.notRequired()
+    ),
+  ESA: yup
+    .bool()
+    .when('CorW', (CorW, schema) =>
+      (CorW as unknown as string) === 'Withdrawal'
+        ? schema.required('ESA is required for Withdrawal')
+        : schema.notRequired()
+    ),
+});
+
+interface FormFields extends yup.InferType<typeof schema> {}
+
+const Cwform: React.FC<ICwformWebPartProps> = ({
+  absoluteUrl,
+  cdoaToDSMListURL,
+  context,
+  formList,
+  spHttpClient,
+}) => {
+  const userData = useData({
+    absoluteUrl: absoluteUrl,
+    spHttpClient: spHttpClient,
+    spListLink: cdoaToDSMListURL,
+  });
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm<FormFields>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      StartDate: new Date(),
+    },
+    reValidateMode: 'onBlur',
+    mode: 'all',
+  });
+
+  const onSave = () => {
+    handleSubmit(
+      data => {
+        console.log('formListUrl: ', formList);
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    )();
+  };
+
+  console.log('useForm Errors: ', errors);
+
+  if (userData === null) return <>loading...</>;
+
+  return (
+    <section className={styles.cwform}>
+      <h2>Cancel / Withdrawal Form</h2>
+      <form onSubmit={handleSubmit(onSave)}>
+        {errors && Object.keys(errors).length > 0 && (
+          <p>{JSON.stringify(errors)}</p>
+        )}
+        <ControlledDropdown
+          errorMessage={errors.CorW?.message}
+          control={control}
+          name="CorW"
+          label="Request Type"
+          options={[
+            { key: 'Cancel', text: 'Cancel' },
+            { key: 'Withdrawal', text: 'Withdrawal' },
+          ]}
+          onChange={option => {
+            setValue('CorW', option?.text);
+          }}
+        />
+        <ControlledTextField
+          errorMessage={errors.StudentName?.message}
+          control={control}
+          name="StudentName"
+          label="Student Name"
+        />
+        <ControlledTextField
+          errorMessage={errors.StudentId?.message}
+          control={control}
+          name="StudentId"
+          label="Student ID"
+          type="number"
+        />
+        <ControlledDatePicker
+          control={control}
+          name="StartDate"
+          label="Current Start Date"
+        />
+        {watch('CorW') === 'Withdrawal' && (
+          <>
+            <ControlledTextField
+              errorMessage={errors.Notes?.message}
+              control={control}
+              name="Notes"
+              label="Student's Exact Written Request"
+              type="text"
+            />
+            <ControlledDropdown
+              errorMessage={errors.DocumentedInNotes?.message}
+              control={control}
+              name="DocumentedInNotes"
+              label="Documented in Notes"
+              options={[
+                { key: 'yes', text: 'Yes' },
+                { key: 'no', text: 'No' },
+              ]}
+            />
+            <ControlledTextField
+              errorMessage={errors.InstructorName?.message}
+              control={control}
+              name="InstructorName"
+              label="Instructor Name"
+              type="text"
+            />
+            <ControlledDropdown
+              errorMessage={errors.ESA?.message}
+              control={control}
+              name="ESA"
+              label="ESA"
+              options={[
+                { key: 'yes', text: 'Yes' },
+                { key: 'no', text: 'No' },
+              ]}
+            />
+          </>
+        )}
+        <ControlledPeoplePicker
+          errorMessage={errors.AAFAAdvisor?.message}
+          control={control}
+          name="AAFAAdvisor"
+          context={context}
+          titleText="Financial Aid Advisor (AA or FA to be notified)"
+          personSelectionLimit={1}
+          disabled={false}
+          searchTextLimit={5}
+        />
+        <ControlledDropdown
+          errorMessage={errors.CDOA?.message}
+          control={control}
+          name="CDOA"
+          label="CDOA Name"
+          options={userData.map(item => ({
+            key: item.CDOA.Id.toString(),
+            text: item.CDOA.Title,
+          }))}
+        />
+        <ControlledTextField
+          errorMessage={errors.DSM?.message}
+          control={control}
+          name="DSM"
+          label="DSM"
+          type="text"
+          disabled={true} // Set to true or false based on your requirements
+        />
+        <PrimaryButton type="submit" text="Submit" />
+      </form>
+    </section>
+  );
+};
+
+export default Cwform;

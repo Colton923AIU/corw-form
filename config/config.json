@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "cwform-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/cwform/CwformWebPart.js",
+          "manifest": "./src/webparts/cwform/CwformWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "CwformWebPartStrings": "lib/webparts/cwform/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}

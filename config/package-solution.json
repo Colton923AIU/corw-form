@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "new-cw-form-client-side-solution",
+    "id": "0f026125-3bec-4423-9e1d-0c2b814a7aae",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.19.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "new-cw-form description"
+      },
+      "longDescription": {
+        "default": "new-cw-form description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "new-cw-form Feature",
+        "description": "The feature that activates elements of the new-cw-form solution.",
+        "id": "8162b7a2-5efc-40cb-b0f8-76d0a81ca45c",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/new-cw-form.sppkg"
+  }
+}
