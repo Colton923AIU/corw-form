@@ -10,6 +10,7 @@ node_modules
 dist
 lib
 release
+solution
 temp
 *.sppkg
 .heft
