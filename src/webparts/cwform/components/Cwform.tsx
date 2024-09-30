@@ -10,9 +10,11 @@ import ControlledDatePicker from '../controlledFields/ControlledDatePicker/Contr
 import ControlledDropdown from '../controlledFields/ControlledDropdown/ControlledDropdown';
 import ControlledPeoplePicker from '../controlledFields/ControlledPeoplePicker/ControlledPeoplePicker';
 import ControlledTextField from '../controlledFields/ControlledTextField/ControlledTextField';
+import { SPHttpClient } from '@microsoft/sp-http';
+import getUserIdByemail from '../helpers/getUserByEmail/getUserByEmail';
 
 const schema = yup.object({
-  AAFAAdvisor: yup.array().required('AAFA Advisor is required'),
+  AA_x002f_FAAdvisor: yup.array().required('AAFA Advisor is required'),
   CDOA: yup.string().required('CDOA is required'),
   DSM: yup.string().required('DSM is required'),
   CorW: yup
@@ -22,7 +24,7 @@ const schema = yup.object({
       'Please select either Cancel or Withdrawal'
     )
     .required('Please select Cancel or Withdrawal'),
-  StudentId: yup.string().required('Student ID is required'),
+  StudentID: yup.string().required('Student ID is required'),
   StudentName: yup
     .string()
     .min(2, 'Must type full name')
@@ -84,25 +86,61 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
-  console.log('userData: ', userData);
-  const onSave = () => {
-    handleSubmit(
-      data => {
-        console.log('formListUrl: ', formList);
-        console.log(data);
-      },
-      err => {
-        console.log(err);
-      }
-    )();
-  };
-  console.log('useForm Errors: ', errors);
 
   if (userData === null) return <>loading...</>;
   return (
     <section className={styles.cwform}>
       <h2>Cancel / Withdrawal Form</h2>
-      <form onSubmit={handleSubmit(onSave)}>
+      <form
+        onSubmit={handleSubmit(async data => {
+          if (!userData) return;
+          const CDOA = userData.filter(item => {
+            if (item.CDOA.Id === parseInt(data.CDOA)) {
+              return true;
+            }
+          })[0].CDOA;
+
+          const DSM = userData.filter(item => {
+            if (item.DSM.Title === data.DSM) {
+              return true;
+            }
+          })[0].DSM;
+          const validData: any = data;
+          validData.CDOANameId = CDOA.Id;
+          validData.CDSMId = DSM.Id;
+          validData.StudentID = parseInt(data.StudentID);
+          (validData.AA_x002f_FAAdvisorId = await getUserIdByemail({
+            spHttpClient: spHttpClient,
+            email: data.AA_x002f_FAAdvisor[0].secondaryText,
+          }).then(data => {
+            return data.Id;
+          })),
+            delete validData.CDOA;
+          delete validData.DSM;
+          delete validData.AA_x002f_FAAdvisor;
+
+          console.log(validData);
+
+          spHttpClient
+            .post(formList, SPHttpClient.configurations.v1, {
+              body: JSON.stringify(validData),
+            })
+            .then((response: any) => {
+              if (!response.ok) {
+                return response.json().then((err: any) => {
+                  throw new Error(JSON.stringify(err));
+                });
+              }
+              return response.json();
+            })
+            .then((data: any) => {
+              console.log('Success:', data);
+            })
+            .catch((error: any) => {
+              console.log('Fail:', error);
+            });
+        })}
+      >
         <ControlledDropdown
           errorMessage={errors.CorW?.message}
           control={control}
@@ -124,9 +162,9 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           label="Student Name"
         />
         <ControlledTextField
-          errorMessage={errors.StudentId?.message}
+          errorMessage={errors.StudentID?.message}
           control={control}
-          name="StudentId"
+          name="StudentID"
           label="Student ID"
           type="number"
         />
@@ -175,9 +213,9 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           </>
         ) : null}
         <ControlledPeoplePicker
-          errorMessage={errors.AAFAAdvisor?.message}
+          errorMessage={errors.AA_x002f_FAAdvisor?.message}
           control={control}
-          name="AAFAAdvisor"
+          name="AA_x002f_FAAdvisor"
           context={context}
           titleText="Financial Aid Advisor (AA or FA to be notified)"
           personSelectionLimit={1}
@@ -193,6 +231,14 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             key: item.CDOA.Id.toString(),
             text: item.CDOA.Title,
           }))}
+          onChange={val => {
+            const DSMValue = userData?.filter(item => {
+              if (item.CDOA.Id === parseInt(val)) {
+                return true;
+              }
+            })[0].DSM.Title;
+            setValue('DSM', DSMValue);
+          }}
         />
         <ControlledTextField
           errorMessage={errors.DSM?.message}
@@ -202,7 +248,11 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           type="text"
           disabled={true} // Set to true or false based on your requirements
         />
-        <PrimaryButton type="submit" text="Submit" />
+        <PrimaryButton
+          type="submit"
+          text="Submit"
+          style={{ marginTop: '5px' }}
+        />
       </form>
     </section>
   );
