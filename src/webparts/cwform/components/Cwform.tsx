@@ -11,12 +11,8 @@ import ControlledDropdown from '../controlledFields/ControlledDropdown/Controlle
 import ControlledPeoplePicker from '../controlledFields/ControlledPeoplePicker/ControlledPeoplePicker';
 import ControlledTextField from '../controlledFields/ControlledTextField/ControlledTextField';
 
-// User picks name, and validated as string.
-// On POST - first get user object from saved state.
-// POST saved state data
 const schema = yup.object({
-  // Fields required for both 'Cancel' and 'Withdrawal'
-  AAFAAdvisor: yup.string().required('AAFA Advisor is required'),
+  AAFAAdvisor: yup.array().required('AAFA Advisor is required'),
   CDOA: yup.string().required('CDOA is required'),
   DSM: yup.string().required('DSM is required'),
   CorW: yup
@@ -32,8 +28,6 @@ const schema = yup.object({
     .min(2, 'Must type full name')
     .required('Student Name is required'),
   StartDate: yup.date().required('Start Date is required'),
-
-  // Conditional validation for 'Withdrawal'
   Notes: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
     then: () =>
@@ -49,18 +43,16 @@ const schema = yup.object({
       yup.string().required('Documented in Notes is required for Withdrawal'),
     otherwise: () => yup.string().notRequired(),
   }),
-
   InstructorName: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
     then: () =>
       yup.string().required('Instructor Name is required for Withdrawal'),
     otherwise: () => yup.string().notRequired(),
   }),
-
   ESA: yup.bool().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
-    then: () => yup.bool().required('ESA is required for Withdrawal'),
-    otherwise: () => yup.bool().notRequired(),
+    then: () => yup.string().required('ESA is required for Withdrawal'),
+    otherwise: () => yup.string().notRequired(),
   }),
 });
 
@@ -92,7 +84,7 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
-
+  console.log('userData: ', userData);
   const onSave = () => {
     handleSubmit(
       data => {
@@ -111,9 +103,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     <section className={styles.cwform}>
       <h2>Cancel / Withdrawal Form</h2>
       <form onSubmit={handleSubmit(onSave)}>
-        {errors && Object.keys(errors).length > 0 && (
-          <p>{JSON.stringify(errors)}</p>
-        )}
         <ControlledDropdown
           errorMessage={errors.CorW?.message}
           control={control}
