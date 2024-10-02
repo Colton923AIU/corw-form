@@ -51,7 +51,7 @@ const schema = yup.object({
       yup.string().required('Instructor Name is required for Withdrawal'),
     otherwise: () => yup.string().notRequired(),
   }),
-  ESA: yup.bool().when('CorW', {
+  ESA: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
     then: () => yup.string().required('ESA is required for Withdrawal'),
     otherwise: () => yup.string().notRequired(),
@@ -78,6 +78,7 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<FormFields>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -109,18 +110,20 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           validData.CDOANameId = CDOA.Id;
           validData.CDSMId = DSM.Id;
           validData.StudentID = parseInt(data.StudentID);
-          (validData.AA_x002f_FAAdvisorId = await getUserIdByemail({
+          validData.AA_x002f_FAAdvisorId = await getUserIdByemail({
             spHttpClient: spHttpClient,
             email: data.AA_x002f_FAAdvisor[0].secondaryText,
+            url: cdoaToDSMListURL,
           }).then(data => {
             return data.Id;
-          })),
-            delete validData.CDOA;
+          });
+
+          delete validData.CDOA;
           delete validData.DSM;
           delete validData.AA_x002f_FAAdvisor;
 
-          console.log(validData);
-
+          console.log('validData: ', validData);
+          reset();
           spHttpClient
             .post(formList, SPHttpClient.configurations.v1, {
               body: JSON.stringify(validData),
@@ -151,7 +154,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             { key: 'Withdrawal', text: 'Withdrawal' },
           ]}
           onChange={option => {
-            // setCorwState(option === 'Withdrawal' ? true : false)
             setValue('CorW', option);
           }}
         />
