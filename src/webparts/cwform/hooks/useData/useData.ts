@@ -82,7 +82,7 @@ const useData = ({ absoluteUrl, spHttpClient, spListLink }: TUseDataProps) => {
           stopFetching.current = true;
         });
       };
-      void asyncPromise();
+      asyncPromise();
     }
   }, [cdoaToDSMList]);
 

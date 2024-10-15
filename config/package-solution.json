@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "Cancel or Withdrawal Form",
-    "id": "0f026125-3bec-4423-9e1d-0c3b915a7aaf",
-    "version": "2.0.0.2",
+    "name": "corw-form-2003",
+    "id": "0f026125-3bec-4423-9e1d-0c3b945a7aaf",
+    "version": "2.0.0.3",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -35,6 +35,6 @@
     ]
   },
   "paths": {
-    "zippedPackage": "solution/CW-Form.sppkg"
+    "zippedPackage": "solution/CW-Form-2003.sppkg"
   }
 }
