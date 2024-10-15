@@ -61,25 +61,28 @@ const useData = ({ absoluteUrl, spHttpClient, spListLink }: TUseDataProps) => {
   React.useEffect(() => {
     if (stopFetching.current) return;
     if (cdoaToDSMList) {
-      Promise.all(
-        cdoaToDSMList.map(async item => {
-          return {
-            CDOA: (await getUserByID({
-              id: item.CDOAId.toString(),
-              spHttpClient: spHttpClient,
-              url: spListLink,
-            })) as TUserData,
-            DSM: (await getUserByID({
-              id: item.DSMId.toString(),
-              spHttpClient: spHttpClient,
-              url: spListLink,
-            })) as TUserData,
-          };
-        })
-      ).then(data => {
-        setResolvedData(data);
-        stopFetching.current = true;
-      });
+      const asyncPromise = async () => {
+        await Promise.all(
+          cdoaToDSMList.map(async item => {
+            return {
+              CDOA: (await getUserByID({
+                id: item.CDOAId.toString(),
+                spHttpClient: spHttpClient,
+                url: spListLink,
+              })) as TUserData,
+              DSM: (await getUserByID({
+                id: item.DSMId.toString(),
+                spHttpClient: spHttpClient,
+                url: spListLink,
+              })) as TUserData,
+            };
+          })
+        ).then(data => {
+          setResolvedData(data);
+          stopFetching.current = true;
+        });
+      };
+      void asyncPromise();
     }
   }, [cdoaToDSMList]);
 
