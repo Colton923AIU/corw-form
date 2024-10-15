@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "new-cw-form-client-side-solution",
-    "id": "0f026125-3bec-4423-9e1d-0c2b814a7aae",
+    "name": "Cancel or Withdrawal Form V1",
+    "id": "0f026125-3bec-4423-9e1d-0c2b814a7aaf",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,

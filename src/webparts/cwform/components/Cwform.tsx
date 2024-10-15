@@ -119,8 +119,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           delete validData.DSM;
           delete validData.AA_x002f_FAAdvisor;
 
-          console.log(validData);
-
           spHttpClient
             .post(formList, SPHttpClient.configurations.v1, {
               body: JSON.stringify(validData),
@@ -129,6 +127,7 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
               if (!response.ok) {
                 return response.json().then((err: any) => {
                   throw new Error(JSON.stringify(err));
+                  3;
                 });
               }
               return response.json();
