@@ -92,6 +92,7 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     <section className={styles.cwform}>
       <h2>Cancel / Withdrawal Form</h2>
       <form
+        id={'formID'}
         onSubmit={handleSubmit(async data => {
           if (!userData) return;
           const CDOA = userData.filter(item => {
@@ -109,17 +110,18 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           validData.CDOANameId = CDOA.Id;
           validData.CDSMId = DSM.Id;
           validData.StudentID = parseInt(data.StudentID);
-          (validData.AA_x002f_FAAdvisorId = await getUserIdByemail({
+          const ret = await getUserIdByemail({
             spHttpClient: spHttpClient,
             email: data.AA_x002f_FAAdvisor[0].secondaryText,
+            url: absoluteUrl,
           }).then(data => {
             return data.Id;
-          })),
-            delete validData.CDOA;
+          });
+          validData.AA_x002f_FAAdvisorId = ret;
+
+          delete validData.CDOA;
           delete validData.DSM;
           delete validData.AA_x002f_FAAdvisor;
-
-          console.log(validData);
 
           spHttpClient
             .post(formList, SPHttpClient.configurations.v1, {
@@ -135,6 +137,9 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             })
             .then((data: any) => {
               console.log('Success:', data);
+              document
+                .getElementById('formID')
+                ?.setAttribute('visibility', 'hidden');
             })
             .catch((error: any) => {
               console.log('Fail:', error);

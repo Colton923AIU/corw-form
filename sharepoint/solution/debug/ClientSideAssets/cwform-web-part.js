@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 
-_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles(".cwform_8d37b475{color:\"[theme:bodyText, default: #323130]\";color:var(--bodyText);overflow:hidden;padding:1em}.cwform_8d37b475.teams_8d37b475{font-family:Segoe UI,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif}.welcome_8d37b475{text-align:center}.welcomeImage_8d37b475{max-width:420px;width:100%}.links_8d37b475 a{color:\"[theme:link, default:#03787c]\";color:var(--link);text-decoration:none}.links_8d37b475 a:hover{color:\"[theme:linkHovered, default: #014446]\";color:var(--linkHovered);text-decoration:underline}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vQzovVXNlcnMvbWNjY29sMDkyMy9wcm9qZWN0cy9uZXctY3ctZm9ybS9zcmMvd2VicGFydHMvY3dmb3JtL2NvbXBvbmVudHMvQ3dmb3JtLm1vZHVsZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBLGlCQUdFLDBDQUFBLENBQ0EscUJBQUEsQ0FIQSxlQUFBLENBQ0EsV0FFQSxDQUNBLGdDQUNFLHNGQUFBLENBSUosa0JBQ0UsaUJBQUEsQ0FHRix1QkFFRSxlQUFBLENBREEsVUFDQSxDQUlBLGtCQUVFLHFDQUFBLENBQ0EsaUJBQUEsQ0FGQSxvQkFFQSxDQUVBLHdCQUVFLDZDQUFBLENBQ0Esd0JBQUEsQ0FGQSx5QkFFQSIsImZpbGUiOiJDd2Zvcm0ubW9kdWxlLmNzcyJ9 */", true);
+_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles(".cwform_8d37b475{color:\"[theme:bodyText, default: #323130]\";color:var(--bodyText);overflow:hidden;padding:1em}.cwform_8d37b475.teams_8d37b475{font-family:Segoe UI,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif}.welcome_8d37b475{text-align:center}.welcomeImage_8d37b475{max-width:420px;width:100%}.links_8d37b475 a{color:\"[theme:link, default:#03787c]\";color:var(--link);text-decoration:none}.links_8d37b475 a:hover{color:\"[theme:linkHovered, default: #014446]\";color:var(--linkHovered);text-decoration:underline}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vQzovVXNlcnMvbWNjY29sMDkyMy9uZXctY29ydy1mb3JtL3NyYy93ZWJwYXJ0cy9jd2Zvcm0vY29tcG9uZW50cy9Dd2Zvcm0ubW9kdWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUEsaUJBR0UsMENBQUEsQ0FDQSxxQkFBQSxDQUhBLGVBQUEsQ0FDQSxXQUVBLENBQ0EsZ0NBQ0Usc0ZBQUEsQ0FJSixrQkFDRSxpQkFBQSxDQUdGLHVCQUVFLGVBQUEsQ0FEQSxVQUNBLENBSUEsa0JBRUUscUNBQUEsQ0FDQSxpQkFBQSxDQUZBLG9CQUVBLENBRUEsd0JBRUUsNkNBQUEsQ0FDQSx3QkFBQSxDQUZBLHlCQUVBIiwiZmlsZSI6IkN3Zm9ybS5tb2R1bGUuY3NzIn0= */", true);
 
 
 /***/ }),
@@ -211,6 +211,7 @@ var Cwform = function (_a) {
                             return [4 /*yield*/, (0,_helpers_getUserByEmail_getUserByEmail__WEBPACK_IMPORTED_MODULE_9__["default"])({
                                     spHttpClient: spHttpClient,
                                     email: data.AA_x002f_FAAdvisor[0].secondaryText,
+                                    url: absoluteUrl,
                                 }).then(function (data) {
                                     return data.Id;
                                 })];
@@ -482,13 +483,15 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 };
 
 var getUserIdByemail = function (_a) {
-    var spHttpClient = _a.spHttpClient, email = _a.email;
+    var spHttpClient = _a.spHttpClient, email = _a.email, url = _a.url;
     return __awaiter(void 0, void 0, void 0, function () {
-        var userUrl, response, data, user;
+        var basePath, subsites, userUrl, response, data, user;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    userUrl = "https://livecareered.sharepoint.com/_api/web/siteusers?$filter=Email eq '".concat(email, "'");
+                    basePath = new URL(url).origin;
+                    subsites = url.split('Lists')[0].split('com')[1];
+                    userUrl = basePath + subsites + "_api/web/siteusers?$filter=Email eq '".concat(email, "'");
                     return [4 /*yield*/, spHttpClient.get(userUrl, _microsoft_sp_http__WEBPACK_IMPORTED_MODULE_0__.SPHttpClient.configurations.v1)];
                 case 1:
                     response = _b.sent();
