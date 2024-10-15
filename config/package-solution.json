@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "Cancel or Withdrawal Form",
-    "id": "0f026125-3bec-4423-9e1d-0c3b815a7aaf",
-    "version": "2.0.0.1",
+    "id": "0f026125-3bec-4423-9e1d-0c3b915a7aaf",
+    "version": "2.0.0.2",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
