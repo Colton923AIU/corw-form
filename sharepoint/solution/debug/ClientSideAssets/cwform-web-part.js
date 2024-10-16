@@ -1,4 +1,4 @@
-define("7df21c50-0eda-4bfe-af81-cbcc2dc0e14a_0.0.1", ["react","react-dom","@microsoft/sp-core-library","@microsoft/sp-webpart-base","@microsoft/sp-http","ControlStrings","@microsoft/sp-lodash-subset"], (__WEBPACK_EXTERNAL_MODULE__12650__, __WEBPACK_EXTERNAL_MODULE__12729__, __WEBPACK_EXTERNAL_MODULE__83878__, __WEBPACK_EXTERNAL_MODULE__63134__, __WEBPACK_EXTERNAL_MODULE__83272__, __WEBPACK_EXTERNAL_MODULE__57243__, __WEBPACK_EXTERNAL_MODULE__80348__) => { return /******/ (() => { // webpackBootstrap
+define("7df21c50-0eda-4bfe-af81-cbcc2dc0e14a_0.0.2", ["react","react-dom","@microsoft/sp-core-library","@microsoft/sp-webpart-base","@microsoft/sp-http","ControlStrings","@microsoft/sp-lodash-subset"], (__WEBPACK_EXTERNAL_MODULE__12650__, __WEBPACK_EXTERNAL_MODULE__12729__, __WEBPACK_EXTERNAL_MODULE__83878__, __WEBPACK_EXTERNAL_MODULE__63134__, __WEBPACK_EXTERNAL_MODULE__83272__, __WEBPACK_EXTERNAL_MODULE__57243__, __WEBPACK_EXTERNAL_MODULE__80348__) => { return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 18814:
@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 
-_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles(".cwform_8d37b475{color:\"[theme:bodyText, default: #323130]\";color:var(--bodyText);overflow:hidden;padding:1em}.cwform_8d37b475.teams_8d37b475{font-family:Segoe UI,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif}.welcome_8d37b475{text-align:center}.welcomeImage_8d37b475{max-width:420px;width:100%}.links_8d37b475 a{color:\"[theme:link, default:#03787c]\";color:var(--link);text-decoration:none}.links_8d37b475 a:hover{color:\"[theme:linkHovered, default: #014446]\";color:var(--linkHovered);text-decoration:underline}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vQzovVXNlcnMvbWNjY29sMDkyMy9uZXctY29ydy1mb3JtL3NyYy93ZWJwYXJ0cy9jd2Zvcm0vY29tcG9uZW50cy9Dd2Zvcm0ubW9kdWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUEsaUJBR0UsMENBQUEsQ0FDQSxxQkFBQSxDQUhBLGVBQUEsQ0FDQSxXQUVBLENBQ0EsZ0NBQ0Usc0ZBQUEsQ0FJSixrQkFDRSxpQkFBQSxDQUdGLHVCQUVFLGVBQUEsQ0FEQSxVQUNBLENBSUEsa0JBRUUscUNBQUEsQ0FDQSxpQkFBQSxDQUZBLG9CQUVBLENBRUEsd0JBRUUsNkNBQUEsQ0FDQSx3QkFBQSxDQUZBLHlCQUVBIiwiZmlsZSI6IkN3Zm9ybS5tb2R1bGUuY3NzIn0= */", true);
+_node_modules_microsoft_sp_css_loader_node_modules_microsoft_load_themed_styles_lib_es6_index_js__WEBPACK_IMPORTED_MODULE_0__.loadStyles(".cwform_01dfeece{color:\"[theme:bodyText, default: #323130]\";color:var(--bodyText);overflow:hidden;padding:1em}.cwform_01dfeece.teams_01dfeece{font-family:Segoe UI,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif}.welcome_01dfeece{text-align:center}.welcomeImage_01dfeece{max-width:420px;width:100%}.links_01dfeece a{color:\"[theme:link, default:#03787c]\";color:var(--link);text-decoration:none}.links_01dfeece a:hover{color:\"[theme:linkHovered, default: #014446]\";color:var(--linkHovered);text-decoration:underline}@keyframes fadeIn_01dfeece{0%{opacity:0}to{opacity:1;pointer-events:inherit}}@keyframes fadeOut_01dfeece{0%{opacity:1}to{opacity:0;pointer-events:none}}.hidden_01dfeece{animation:fadeOut_01dfeece 1s forwards}.visible_01dfeece{animation:fadeIn_01dfeece 3s forwards;visibility:visible}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vQzovVXNlcnMvbWNjY29sMDkyMy9uZXctY29ydy1mb3JtL3NyYy93ZWJwYXJ0cy9jd2Zvcm0vY29tcG9uZW50cy9Dd2Zvcm0ubW9kdWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUEsaUJBR0UsMENBQUEsQ0FDQSxxQkFBQSxDQUhBLGVBQUEsQ0FDQSxXQUVBLENBQ0EsZ0NBQ0Usc0ZBQUEsQ0FJSixrQkFDRSxpQkFBQSxDQUdGLHVCQUVFLGVBQUEsQ0FEQSxVQUNBLENBSUEsa0JBRUUscUNBQUEsQ0FDQSxpQkFBQSxDQUZBLG9CQUVBLENBSUEsd0JBRUUsNkNBQUEsQ0FDQSx3QkFBQSxDQUZBLHlCQUVBLENBT04sMkJBQ0UsR0FDRSxTQUFBLENBRUYsR0FDRSxTQUFBLENBQ0Esc0JBQUEsQ0FBQSxDQUdKLDRCQUNFLEdBQ0UsU0FBQSxDQUVGLEdBQ0UsU0FBQSxDQUNBLG1CQUFBLENBQUEsQ0FJSixpQkFDRSxzQ0FBQSxDQUdGLGtCQUVFLHFDQUFBLENBREEsa0JBQ0EiLCJmaWxlIjoiQ3dmb3JtLm1vZHVsZS5jc3MifQ== */", true);
 
 
 /***/ }),
@@ -131,38 +131,30 @@ var schema = yup__WEBPACK_IMPORTED_MODULE_3__.object({
     CDOA: yup__WEBPACK_IMPORTED_MODULE_3__.string().required('CDOA is required'),
     DSM: yup__WEBPACK_IMPORTED_MODULE_3__.string().required('DSM is required'),
     CorW: yup__WEBPACK_IMPORTED_MODULE_3__.string()
-        .oneOf(['Cancel', 'Withdrawal'], 'Please select either Cancel or Withdrawal')
-        .required('Please select Cancel or Withdrawal'),
-    StudentID: yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Student ID is required'),
+        .oneOf(['Cancel', 'Withdrawal'], 'Cancel or Withdrawal')
+        .required('Cancel or Withdrawal'),
+    StudentID: yup__WEBPACK_IMPORTED_MODULE_3__.number().required('Student ID Required'),
     StudentName: yup__WEBPACK_IMPORTED_MODULE_3__.string()
-        .min(2, 'Must type full name')
-        .required('Student Name is required'),
-    StartDate: yup__WEBPACK_IMPORTED_MODULE_3__.date().required('Start Date is required'),
+        .min(2, 'Full Name Required')
+        .required('Student Name required'),
+    StartDate: yup__WEBPACK_IMPORTED_MODULE_3__.date().required('Start Date Required'),
     Notes: yup__WEBPACK_IMPORTED_MODULE_3__.string().when('CorW', {
         is: function (val) { return val === 'Withdrawal'; },
-        then: function () {
-            return yup__WEBPACK_IMPORTED_MODULE_3__.string()
-                .min(10, 'Must provide more detail')
-                .required('Notes are required for Withdrawal');
-        },
+        then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Notes Required (Withdrawal)'); },
     }),
     DocumentedInNotes: yup__WEBPACK_IMPORTED_MODULE_3__.string().when('CorW', {
         is: function (val) { return val === 'Withdrawal'; },
-        then: function () {
-            return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Documented in Notes is required for Withdrawal');
-        },
+        then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Required (Withdrawal)'); },
         otherwise: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().notRequired(); },
     }),
     InstructorName: yup__WEBPACK_IMPORTED_MODULE_3__.string().when('CorW', {
         is: function (val) { return val === 'Withdrawal'; },
-        then: function () {
-            return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Instructor Name is required for Withdrawal');
-        },
+        then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Instructor Name Required (Withdrawal)'); },
         otherwise: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().notRequired(); },
     }),
     ESA: yup__WEBPACK_IMPORTED_MODULE_3__.bool().when('CorW', {
         is: function (val) { return val === 'Withdrawal'; },
-        then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('ESA is required for Withdrawal'); },
+        then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('ESA Required (Withdrawal)'); },
         otherwise: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().notRequired(); },
     }),
 });
@@ -182,14 +174,15 @@ var Cwform = function (_a) {
         reValidateMode: 'onBlur',
         mode: 'all',
     }), watch = _m.watch, setValue = _m.setValue, handleSubmit = _m.handleSubmit, errors = _m.formState.errors, control = _m.control;
+    var _o = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), submitted = _o[0], setSubmitted = _o[1];
     if (userData === null)
         return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "loading...");
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", { className: _Cwform_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cwform },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Cancel / Withdrawal Form"),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", { onSubmit: handleSubmit(function (data) { return __awaiter(void 0, void 0, void 0, function () {
-                var CDOA, DSM, validData, _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, submitted ? 'Submitted' : 'Cancel / Withdrawal Form'),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", { className: submitted ? _Cwform_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].hidden : _Cwform_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].visible, onSubmit: handleSubmit(function (data) { return __awaiter(void 0, void 0, void 0, function () {
+                var CDOA, DSM, validData, ret;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
                         case 0:
                             if (!userData)
                                 return [2 /*return*/];
@@ -206,21 +199,25 @@ var Cwform = function (_a) {
                             validData = data;
                             validData.CDOANameId = CDOA.Id;
                             validData.CDSMId = DSM.Id;
-                            validData.StudentID = parseInt(data.StudentID);
-                            _a = validData;
+                            validData.StudentID = data.StudentID;
                             return [4 /*yield*/, (0,_helpers_getUserByEmail_getUserByEmail__WEBPACK_IMPORTED_MODULE_9__["default"])({
                                     spHttpClient: spHttpClient,
                                     email: data.AA_x002f_FAAdvisor[0].secondaryText,
-                                    url: absoluteUrl,
-                                }).then(function (data) {
+                                    formList: formList,
+                                })
+                                    .then(function (data) {
                                     return data.Id;
+                                })
+                                    .catch(function (e) {
+                                    console.log('error: ', e);
+                                    return null;
                                 })];
                         case 1:
-                            (_a.AA_x002f_FAAdvisorId = _b.sent()),
-                                delete validData.CDOA;
+                            ret = _a.sent();
+                            validData.AA_x002f_FAAdvisorId = ret;
+                            delete validData.CDOA;
                             delete validData.DSM;
                             delete validData.AA_x002f_FAAdvisor;
-                            console.log(validData);
                             spHttpClient
                                 .post(formList, _microsoft_sp_http__WEBPACK_IMPORTED_MODULE_8__.SPHttpClient.configurations.v1, {
                                 body: JSON.stringify(validData),
@@ -234,9 +231,10 @@ var Cwform = function (_a) {
                                 return response.json();
                             })
                                 .then(function (data) {
-                                console.log('Success:', data);
+                                setSubmitted(true);
                             })
                                 .catch(function (error) {
+                                setSubmitted(false);
                                 console.log('Fail:', error);
                             });
                             return [2 /*return*/];
@@ -297,11 +295,15 @@ var Cwform = function (_a) {
 /* tslint:disable */
 __webpack_require__(/*! ./Cwform.module.css */ 18814);
 var styles = {
-    cwform: 'cwform_8d37b475',
-    teams: 'teams_8d37b475',
-    welcome: 'welcome_8d37b475',
-    welcomeImage: 'welcomeImage_8d37b475',
-    links: 'links_8d37b475'
+    cwform: 'cwform_01dfeece',
+    teams: 'teams_01dfeece',
+    welcome: 'welcome_01dfeece',
+    welcomeImage: 'welcomeImage_01dfeece',
+    links: 'links_01dfeece',
+    hidden: 'hidden_01dfeece',
+    fadeOut: 'fadeOut_01dfeece',
+    visible: 'visible_01dfeece',
+    fadeIn: 'fadeIn_01dfeece'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (styles);
 /* tslint:enable */ 
@@ -483,16 +485,15 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 };
 
 var getUserIdByemail = function (_a) {
-    var spHttpClient = _a.spHttpClient, email = _a.email, url = _a.url;
+    var spHttpClient = _a.spHttpClient, email = _a.email, formList = _a.formList;
     return __awaiter(void 0, void 0, void 0, function () {
-        var basePath, subsites, userUrl, response, data, user;
+        var basePath, listUrl, response, data, user;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    basePath = new URL(url).origin;
-                    subsites = url.split('Lists')[0].split('com')[1];
-                    userUrl = basePath + subsites + "_api/web/siteusers?$filter=Email eq '".concat(email, "'");
-                    return [4 /*yield*/, spHttpClient.get(userUrl, _microsoft_sp_http__WEBPACK_IMPORTED_MODULE_0__.SPHttpClient.configurations.v1)];
+                    basePath = new URL(formList).origin;
+                    listUrl = basePath + "/_api/web/siteusers?$filter=Email%20eq%20'".concat(email, "'");
+                    return [4 /*yield*/, spHttpClient.get(listUrl, _microsoft_sp_http__WEBPACK_IMPORTED_MODULE_0__.SPHttpClient.configurations.v1)];
                 case 1:
                     response = _b.sent();
                     if (!response.ok) {
@@ -51367,10 +51368,11 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /* harmony export */   array: () => (/* binding */ create$2),
 /* harmony export */   bool: () => (/* binding */ create$7),
 /* harmony export */   date: () => (/* binding */ create$4),
+/* harmony export */   number: () => (/* binding */ create$5),
 /* harmony export */   object: () => (/* binding */ create$3),
 /* harmony export */   string: () => (/* binding */ create$6)
 /* harmony export */ });
-/* unused harmony exports ArraySchema, BooleanSchema, DateSchema, MixedSchema, NumberSchema, ObjectSchema, Schema, StringSchema, TupleSchema, ValidationError, addMethod, boolean, defaultLocale, getIn, isSchema, lazy, mixed, number, printValue, reach, ref, setLocale, tuple */
+/* unused harmony exports ArraySchema, BooleanSchema, DateSchema, MixedSchema, NumberSchema, ObjectSchema, Schema, StringSchema, TupleSchema, ValidationError, addMethod, boolean, defaultLocale, getIn, isSchema, lazy, mixed, printValue, reach, ref, setLocale, tuple */
 /* harmony import */ var property_expr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! property-expr */ 41981);
 /* harmony import */ var property_expr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(property_expr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var tiny_case__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tiny-case */ 18956);

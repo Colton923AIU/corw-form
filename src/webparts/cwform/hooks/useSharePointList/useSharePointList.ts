@@ -84,7 +84,7 @@ const useSharePointList = ({
     };
 
     if (absoluteUrl && spListLink) {
-      fetchData();
+      void fetchData();
     }
   }, [absoluteUrl, spListLink, client]);
 

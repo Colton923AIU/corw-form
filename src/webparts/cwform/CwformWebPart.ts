@@ -27,7 +27,7 @@ export default class CwformWebPart extends BaseClientSideWebPart<ICwformWebPartP
           spHttpClient: this.context.spHttpClient,
         },
         cdoaToDSMListURL: `https://livecareered.sharepoint.com/sites/AIU/Lists/CDOA%20to%20DSM%20Map/AllItems.aspx`,
-        formList: `https://livecareered.sharepoint.com/sites/Forms/_api/web/lists/getbytitle('Cancel%20or%20Withdrawal%20Request%20Form%20Test')/items`,
+        formList: `https://livecareered.sharepoint.com/sites/Forms/_api/web/Lists/getbytitle('Cancel%20or%20Withdrawal%20Request%20Form%20Test')/items`,
       });
 
     ReactDom.render(element, this.domElement);

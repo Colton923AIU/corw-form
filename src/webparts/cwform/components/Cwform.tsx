@@ -19,41 +19,32 @@ const schema = yup.object({
   DSM: yup.string().required('DSM is required'),
   CorW: yup
     .string()
-    .oneOf(
-      ['Cancel', 'Withdrawal'],
-      'Please select either Cancel or Withdrawal'
-    )
-    .required('Please select Cancel or Withdrawal'),
-  StudentID: yup.string().required('Student ID is required'),
+    .oneOf(['Cancel', 'Withdrawal'], 'Cancel or Withdrawal')
+    .required('Cancel or Withdrawal'),
+  StudentID: yup.number().required('Student ID Required'),
   StudentName: yup
     .string()
-    .min(2, 'Must type full name')
-    .required('Student Name is required'),
-  StartDate: yup.date().required('Start Date is required'),
+    .min(2, 'Full Name Required')
+    .required('Student Name required'),
+  StartDate: yup.date().required('Start Date Required'),
   Notes: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
-    then: () =>
-      yup
-        .string()
-        .min(10, 'Must provide more detail')
-        .required('Notes are required for Withdrawal'),
+    then: () => yup.string().required('Notes Required (Withdrawal)'),
   }),
 
   DocumentedInNotes: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
-    then: () =>
-      yup.string().required('Documented in Notes is required for Withdrawal'),
+    then: () => yup.string().required('Required (Withdrawal)'),
     otherwise: () => yup.string().notRequired(),
   }),
   InstructorName: yup.string().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
-    then: () =>
-      yup.string().required('Instructor Name is required for Withdrawal'),
+    then: () => yup.string().required('Instructor Name Required (Withdrawal)'),
     otherwise: () => yup.string().notRequired(),
   }),
   ESA: yup.bool().when('CorW', {
     is: (val: string) => val === 'Withdrawal',
-    then: () => yup.string().required('ESA is required for Withdrawal'),
+    then: () => yup.string().required('ESA Required (Withdrawal)'),
     otherwise: () => yup.string().notRequired(),
   }),
 });
@@ -86,13 +77,14 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
     reValidateMode: 'onBlur',
     mode: 'all',
   });
-
+  const [submitted, setSubmitted] = React.useState<boolean>(false);
   if (userData === null) return <>loading...</>;
+
   return (
     <section className={styles.cwform}>
-      <h2>Cancel / Withdrawal Form</h2>
+      <h2>{submitted ? 'Submitted' : 'Cancel / Withdrawal Form'}</h2>
       <form
-        id={'formID'}
+        className={submitted ? styles.hidden : styles.visible}
         onSubmit={handleSubmit(async data => {
           if (!userData) return;
           const CDOA = userData.filter(item => {
@@ -100,7 +92,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
               return true;
             }
           })[0].CDOA;
-
           const DSM = userData.filter(item => {
             if (item.DSM.Title === data.DSM) {
               return true;
@@ -109,20 +100,24 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           const validData: any = data;
           validData.CDOANameId = CDOA.Id;
           validData.CDSMId = DSM.Id;
-          validData.StudentID = parseInt(data.StudentID);
+          validData.StudentID = data.StudentID;
           const ret = await getUserIdByemail({
             spHttpClient: spHttpClient,
             email: data.AA_x002f_FAAdvisor[0].secondaryText,
-            url: absoluteUrl,
-          }).then(data => {
-            return data.Id;
-          });
+            formList: formList,
+          })
+            .then(data => {
+              return data.Id;
+            })
+            .catch(e => {
+              console.log('error: ', e);
+              return null;
+            });
           validData.AA_x002f_FAAdvisorId = ret;
 
           delete validData.CDOA;
           delete validData.DSM;
           delete validData.AA_x002f_FAAdvisor;
-
           spHttpClient
             .post(formList, SPHttpClient.configurations.v1, {
               body: JSON.stringify(validData),
@@ -136,12 +131,10 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
               return response.json();
             })
             .then((data: any) => {
-              console.log('Success:', data);
-              document
-                .getElementById('formID')
-                ?.setAttribute('visibility', 'hidden');
+              setSubmitted(true);
             })
             .catch((error: any) => {
+              setSubmitted(false);
               console.log('Fail:', error);
             });
         })}

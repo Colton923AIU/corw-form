@@ -6,12 +6,19 @@ type TgetUserByIDProps = {
   spHttpClient: SPHttpClient;
 };
 
-const getUserByID = async ({ id, url, spHttpClient }: TgetUserByIDProps) => {
+const getUserByID: ({
+  id,
+  url,
+  spHttpClient,
+}: TgetUserByIDProps) => Promise<any> = async ({
+  id,
+  url,
+  spHttpClient,
+}: TgetUserByIDProps) => {
   const basePath = new URL(url).origin;
   const subsites = url.split('Lists')[0].split('com')[1];
 
   const listUrl = basePath + subsites + `_api/web/getUserByID(${id})`;
-  console.log('listUrl: ', listUrl);
   try {
     const response = await spHttpClient.get(
       listUrl,

@@ -37,7 +37,15 @@ type TUserData = {
   UserPrincipalName: string;
 };
 
-const useData = ({ absoluteUrl, spHttpClient, spListLink }: TUseDataProps) => {
+const useData: ({
+  absoluteUrl,
+  spHttpClient,
+  spListLink,
+}: TUseDataProps) => { CDOA: TUserData; DSM: TUserData }[] | null = ({
+  absoluteUrl,
+  spHttpClient,
+  spListLink,
+}: TUseDataProps) => {
   const cdoaToDSMList = useSharePointList({
     absoluteUrl: absoluteUrl,
     client: spHttpClient,
@@ -61,7 +69,7 @@ const useData = ({ absoluteUrl, spHttpClient, spListLink }: TUseDataProps) => {
   React.useEffect(() => {
     if (stopFetching.current) return;
     if (cdoaToDSMList) {
-      Promise.all(
+      void Promise.all(
         cdoaToDSMList.map(async item => {
           return {
             CDOA: (await getUserByID({

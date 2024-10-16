@@ -3,23 +3,25 @@ import { SPHttpClient } from '@microsoft/sp-http';
 type TgetUserIdByemail = {
   spHttpClient: SPHttpClient;
   email: string;
-  url: string;
+  formList: string;
 };
 
-const getUserIdByemail = async ({
+const getUserIdByemail: ({
   spHttpClient,
   email,
-  url,
-}: TgetUserIdByemail) => {
-  const basePath = new URL(url).origin;
-  const subsites = url.split('Lists')[0].split('com')[1];
-
-  const userUrl =
-    basePath + subsites + `/_api/web/siteusers?$filter=Email eq '${email}'`;
-  console.log('userUrl: ', userUrl);
+  formList,
+}: TgetUserIdByemail) => Promise<{
+  Id: number;
+  Title: any;
+  Email: any;
+}> = async ({ spHttpClient, email, formList }: TgetUserIdByemail) => {
+  const basePath = new URL(formList).origin;
+  const subsites = formList.split('Lists')[0].split('com')[1];
+  const listUrl =
+    basePath + subsites + `siteusers?$filter=Email%20eq%20'${email}'`;
 
   const response = await spHttpClient.get(
-    userUrl,
+    listUrl,
     SPHttpClient.configurations.v1
   );
 
