@@ -152,7 +152,7 @@ var schema = yup__WEBPACK_IMPORTED_MODULE_3__.object({
         then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('Instructor Name Required (Withdrawal)'); },
         otherwise: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().notRequired(); },
     }),
-    ESA: yup__WEBPACK_IMPORTED_MODULE_3__.bool().when('CorW', {
+    ESA: yup__WEBPACK_IMPORTED_MODULE_3__.string().when('CorW', {
         is: function (val) { return val === 'Withdrawal'; },
         then: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().required('ESA Required (Withdrawal)'); },
         otherwise: function () { return yup__WEBPACK_IMPORTED_MODULE_3__.string().notRequired(); },
@@ -161,12 +161,13 @@ var schema = yup__WEBPACK_IMPORTED_MODULE_3__.object({
 var Cwform = function (_a) {
     var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     var absoluteUrl = _a.absoluteUrl, cdoaToDSMListURL = _a.cdoaToDSMListURL, context = _a.context, formList = _a.formList, spHttpClient = _a.spHttpClient;
+    var _m = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), submitted = _m[0], setSubmitted = _m[1];
     var userData = (0,_hooks__WEBPACK_IMPORTED_MODULE_2__.useData)({
         absoluteUrl: absoluteUrl,
         spHttpClient: spHttpClient,
         spListLink: cdoaToDSMListURL,
     });
-    var _m = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_10__.useForm)({
+    var _o = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_10__.useForm)({
         resolver: (0,_hookform_resolvers_yup__WEBPACK_IMPORTED_MODULE_11__.yupResolver)(schema),
         defaultValues: {
             StartDate: new Date(),
@@ -226,6 +227,7 @@ var Cwform = function (_a) {
                                 if (!response.ok) {
                                     return response.json().then(function (err) {
                                         throw new Error(JSON.stringify(err));
+                                        3;
                                     });
                                 }
                                 return response.json();
@@ -275,7 +277,7 @@ var Cwform = function (_a) {
                     setValue('DSM', DSMValue);
                 } }),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_controlledFields_ControlledTextField_ControlledTextField__WEBPACK_IMPORTED_MODULE_7__["default"], { errorMessage: (_l = errors.DSM) === null || _l === void 0 ? void 0 : _l.message, control: control, name: "DSM", label: "DSM", type: "text", disabled: true }),
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fluentui_react__WEBPACK_IMPORTED_MODULE_12__.PrimaryButton, { type: "submit", text: "Submit", style: { marginTop: '5px' } }))));
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fluentui_react__WEBPACK_IMPORTED_MODULE_12__.PrimaryButton, { type: "submit", text: "Submit", style: { marginTop: '5px' } })))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Cwform);
 
@@ -711,32 +713,42 @@ var useData = function (_a) {
         if (stopFetching.current)
             return;
         if (cdoaToDSMList) {
-            Promise.all(cdoaToDSMList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _a = {};
-                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
-                                    id: item.CDOAId.toString(),
-                                    spHttpClient: spHttpClient,
-                                    url: spListLink,
-                                })];
+            var asyncPromise = function () { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, Promise.all(cdoaToDSMList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
+                                var _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            _a = {};
+                                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
+                                                    id: item.CDOAId.toString(),
+                                                    spHttpClient: spHttpClient,
+                                                    url: spListLink,
+                                                })];
+                                        case 1:
+                                            _a.CDOA = (_b.sent());
+                                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
+                                                    id: item.DSMId.toString(),
+                                                    spHttpClient: spHttpClient,
+                                                    url: spListLink,
+                                                })];
+                                        case 2: return [2 /*return*/, (_a.DSM = (_b.sent()),
+                                                _a)];
+                                    }
+                                });
+                            }); })).then(function (data) {
+                                setResolvedData(data);
+                                stopFetching.current = true;
+                            })];
                         case 1:
-                            _a.CDOA = (_b.sent());
-                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
-                                    id: item.DSMId.toString(),
-                                    spHttpClient: spHttpClient,
-                                    url: spListLink,
-                                })];
-                        case 2: return [2 /*return*/, (_a.DSM = (_b.sent()),
-                                _a)];
+                            _a.sent();
+                            return [2 /*return*/];
                     }
                 });
-            }); })).then(function (data) {
-                setResolvedData(data);
-                stopFetching.current = true;
-            });
+            }); };
+            void asyncPromise();
         }
     }, [cdoaToDSMList]);
     if (resolvedData.length === 0) {
@@ -895,7 +907,7 @@ var useSharePointList = function (_a) {
             });
         }); };
         if (absoluteUrl && spListLink) {
-            fetchData();
+            void fetchData();
         }
     }, [absoluteUrl, spListLink, client]);
     return listData;
@@ -51366,7 +51378,6 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   array: () => (/* binding */ create$2),
-/* harmony export */   bool: () => (/* binding */ create$7),
 /* harmony export */   date: () => (/* binding */ create$4),
 /* harmony export */   number: () => (/* binding */ create$5),
 /* harmony export */   object: () => (/* binding */ create$3),
@@ -63878,7 +63889,7 @@ var CwformWebPart = /** @class */ (function (_super) {
                 msGraphClientFactory: this.context.msGraphClientFactory,
                 spHttpClient: this.context.spHttpClient,
             },
-            cdoaToDSMListURL: "https://livecareered.sharepoint.com/sites/AIU/Lists/CDOA%20to%20DSM%20Map/AllItems.aspx",
+            cdoaToDSMListURL: "https://livecareered.sharepoint.com/sites/Forms/Lists/CDOA%20to%20DSM%20Map/AllItems.aspx",
             formList: "https://livecareered.sharepoint.com/sites/Forms/_api/web/lists/getbytitle('Cancel%20or%20Withdrawal%20Request%20Form%20Test')/items",
         });
         react_dom__WEBPACK_IMPORTED_MODULE_1__.render(element, this.domElement);

@@ -16,10 +16,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "new-cw-form description"
+        "default": "SPFX WebPart Form"
       },
       "longDescription": {
-        "default": "new-cw-form description"
+        "default": "The Cancel or Withdrawal form is a form built specifically for one shape SharePoint List that is the Admissions' Team's Form."
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -27,8 +27,8 @@
     },
     "features": [
       {
-        "title": "new-cw-form Feature",
-        "description": "The feature that activates elements of the new-cw-form solution.",
+        "title": "",
+        "description": "",
         "id": "8162b7a2-5efc-40cb-b0f8-76d0a81ca45c",
         "version": "1.0.0.0"
       }
