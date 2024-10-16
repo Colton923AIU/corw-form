@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "new-cw-form-client-side-solution",
-    "id": "0f026125-3bec-4423-9e1d-0c2b814a8ab0",
-    "version": "1.0.0.0",
+    "id": "0f026125-3bec-4423-9e1d-0d2b824a8ab1",
+    "version": "2.0.0.6",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -35,6 +35,6 @@
     ]
   },
   "paths": {
-    "zippedPackage": "solution/new-cw-form-03.sppkg"
+    "zippedPackage": "solution/new-cw-form-06.sppkg"
   }
 }
