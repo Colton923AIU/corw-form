@@ -210,119 +210,48 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             />
           </>
         ) : null}
-          <ControlledDropdown
-            errorMessage={errors.CorW?.message}
-            control={control}
-            name="CorW"
-            label="Request Type"
-            options={[
-              { key: 'Cancel', text: 'Cancel' },
-              { key: 'Withdrawal', text: 'Withdrawal' },
-            ]}
-            onChange={option => {
-              // setCorwState(option === 'Withdrawal' ? true : false)
-              setValue('CorW', option);
-            }}
-          />
-          <ControlledTextField
-            errorMessage={errors.StudentName?.message}
-            control={control}
-            name="StudentName"
-            label="Student Name"
-          />
-          <ControlledTextField
-            errorMessage={errors.StudentID?.message}
-            control={control}
-            name="StudentID"
-            label="Student ID"
-            type="number"
-          />
-          <ControlledDatePicker
-            control={control}
-            name="StartDate"
-            label="Current Start Date"
-          />
-          {/* {corwState ? ( */}
-          {watch('CorW') === 'Withdrawal' ? (
-            <>
-              <ControlledTextField
-                errorMessage={errors.Notes?.message}
-                control={control}
-                name="Notes"
-                label="Student's Exact Written Request"
-                type="text"
-              />
-              <ControlledDropdown
-                errorMessage={errors.DocumentedInNotes?.message}
-                control={control}
-                name="DocumentedInNotes"
-                label="Documented in Notes"
-                options={[
-                  { key: 'yes', text: 'Yes' },
-                  { key: 'no', text: 'No' },
-                ]}
-              />
-              <ControlledTextField
-                errorMessage={errors.InstructorName?.message}
-                control={control}
-                name="InstructorName"
-                label="Instructor Name"
-                type="text"
-              />
-              <ControlledDropdown
-                errorMessage={errors.ESA?.message}
-                control={control}
-                name="ESA"
-                label="ESA"
-                options={[
-                  { key: 'yes', text: 'Yes' },
-                  { key: 'no', text: 'No' },
-                ]}
-              />
-            </>
-          ) : null}
-          <ControlledPeoplePicker
-            errorMessage={errors.AA_x002f_FAAdvisor?.message}
-            control={control}
-            name="AA_x002f_FAAdvisor"
-            context={context}
-            titleText="Financial Aid Advisor (AA or FA to be notified)"
-            personSelectionLimit={1}
-            disabled={false}
-            searchTextLimit={5}
-          />
-          <ControlledDropdown
-            errorMessage={errors.CDOA?.message}
-            control={control}
-            name="CDOA"
-            label="CDOA Name"
-            options={userData.map(item => ({
-              key: item.CDOA.Id.toString(),
-              text: item.CDOA.Title,
-            }))}
-            onChange={val => {
-              const DSMValue = userData?.filter(item => {
-                if (item.CDOA.Id === parseInt(val)) {
-                  return true;
-                }
-              })[0].DSM.Title;
-              setValue('DSM', DSMValue);
-            }}
-          />
-          <ControlledTextField
-            errorMessage={errors.DSM?.message}
-            control={control}
-            name="DSM"
-            label="DSM"
-            type="text"
-            disabled={true} // Set to true or false based on your requirements
-          />
-          <PrimaryButton
-            type="submit"
-            text="Submit"
-            style={{ marginTop: '5px' }}
-          />
-        </form>
+        <ControlledPeoplePicker
+          errorMessage={errors.AA_x002f_FAAdvisor?.message}
+          control={control}
+          name="AA_x002f_FAAdvisor"
+          context={context}
+          titleText="Financial Aid Advisor (AA or FA to be notified)"
+          personSelectionLimit={1}
+          disabled={false}
+          searchTextLimit={5}
+        />
+        <ControlledDropdown
+          errorMessage={errors.CDOA?.message}
+          control={control}
+          name="CDOA"
+          label="CDOA Name"
+          options={userData.map(item => ({
+            key: item.CDOA.Id.toString(),
+            text: item.CDOA.Title,
+          }))}
+          onChange={val => {
+            const DSMValue = userData?.filter(item => {
+              if (item.CDOA.Id === parseInt(val)) {
+                return true;
+              }
+            })[0].DSM.Title;
+            setValue('DSM', DSMValue);
+          }}
+        />
+        <ControlledTextField
+          errorMessage={errors.DSM?.message}
+          control={control}
+          name="DSM"
+          label="DSM"
+          type="text"
+          disabled={true} // Set to true or false based on your requirements
+        />
+        <PrimaryButton
+          type="submit"
+          text="Submit"
+          style={{ marginTop: '5px' }}
+        />
+      </form>
     </section>
   );
 };

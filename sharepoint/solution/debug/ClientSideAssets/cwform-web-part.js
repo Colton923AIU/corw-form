@@ -174,8 +174,7 @@ var Cwform = function (_a) {
         },
         reValidateMode: 'onBlur',
         mode: 'all',
-    }), watch = _m.watch, setValue = _m.setValue, handleSubmit = _m.handleSubmit, errors = _m.formState.errors, control = _m.control;
-    var _o = react__WEBPACK_IMPORTED_MODULE_0__.useState(false), submitted = _o[0], setSubmitted = _o[1];
+    }), watch = _o.watch, setValue = _o.setValue, handleSubmit = _o.handleSubmit, errors = _o.formState.errors, control = _o.control;
     if (userData === null)
         return react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "loading...");
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", { className: _Cwform_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cwform },
@@ -227,7 +226,6 @@ var Cwform = function (_a) {
                                 if (!response.ok) {
                                     return response.json().then(function (err) {
                                         throw new Error(JSON.stringify(err));
-                                        3;
                                     });
                                 }
                                 return response.json();
@@ -277,7 +275,7 @@ var Cwform = function (_a) {
                     setValue('DSM', DSMValue);
                 } }),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_controlledFields_ControlledTextField_ControlledTextField__WEBPACK_IMPORTED_MODULE_7__["default"], { errorMessage: (_l = errors.DSM) === null || _l === void 0 ? void 0 : _l.message, control: control, name: "DSM", label: "DSM", type: "text", disabled: true }),
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fluentui_react__WEBPACK_IMPORTED_MODULE_12__.PrimaryButton, { type: "submit", text: "Submit", style: { marginTop: '5px' } })))));
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fluentui_react__WEBPACK_IMPORTED_MODULE_12__.PrimaryButton, { type: "submit", text: "Submit", style: { marginTop: '5px' } }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Cwform);
 
@@ -489,12 +487,13 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 var getUserIdByemail = function (_a) {
     var spHttpClient = _a.spHttpClient, email = _a.email, formList = _a.formList;
     return __awaiter(void 0, void 0, void 0, function () {
-        var basePath, listUrl, response, data, user;
+        var basePath, subsites, listUrl, response, data, user;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     basePath = new URL(formList).origin;
-                    listUrl = basePath + "/_api/web/siteusers?$filter=Email%20eq%20'".concat(email, "'");
+                    subsites = formList.split('Lists')[0].split('com')[1];
+                    listUrl = basePath + subsites + "siteusers?$filter=Email%20eq%20'".concat(email, "'");
                     return [4 /*yield*/, spHttpClient.get(listUrl, _microsoft_sp_http__WEBPACK_IMPORTED_MODULE_0__.SPHttpClient.configurations.v1)];
                 case 1:
                     response = _b.sent();
@@ -713,42 +712,32 @@ var useData = function (_a) {
         if (stopFetching.current)
             return;
         if (cdoaToDSMList) {
-            var asyncPromise = function () { return __awaiter(void 0, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, Promise.all(cdoaToDSMList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
-                                var _a;
-                                return __generator(this, function (_b) {
-                                    switch (_b.label) {
-                                        case 0:
-                                            _a = {};
-                                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
-                                                    id: item.CDOAId.toString(),
-                                                    spHttpClient: spHttpClient,
-                                                    url: spListLink,
-                                                })];
-                                        case 1:
-                                            _a.CDOA = (_b.sent());
-                                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
-                                                    id: item.DSMId.toString(),
-                                                    spHttpClient: spHttpClient,
-                                                    url: spListLink,
-                                                })];
-                                        case 2: return [2 /*return*/, (_a.DSM = (_b.sent()),
-                                                _a)];
-                                    }
-                                });
-                            }); })).then(function (data) {
-                                setResolvedData(data);
-                                stopFetching.current = true;
-                            })];
+            void Promise.all(cdoaToDSMList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
+                var _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _a = {};
+                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
+                                    id: item.CDOAId.toString(),
+                                    spHttpClient: spHttpClient,
+                                    url: spListLink,
+                                })];
                         case 1:
-                            _a.sent();
-                            return [2 /*return*/];
+                            _a.CDOA = (_b.sent());
+                            return [4 /*yield*/, (0,_helpers_getUserByID_getUserByID__WEBPACK_IMPORTED_MODULE_2__["default"])({
+                                    id: item.DSMId.toString(),
+                                    spHttpClient: spHttpClient,
+                                    url: spListLink,
+                                })];
+                        case 2: return [2 /*return*/, (_a.DSM = (_b.sent()),
+                                _a)];
                     }
                 });
-            }); };
-            void asyncPromise();
+            }); })).then(function (data) {
+                setResolvedData(data);
+                stopFetching.current = true;
+            });
         }
     }, [cdoaToDSMList]);
     if (resolvedData.length === 0) {
@@ -51383,7 +51372,7 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /* harmony export */   object: () => (/* binding */ create$3),
 /* harmony export */   string: () => (/* binding */ create$6)
 /* harmony export */ });
-/* unused harmony exports ArraySchema, BooleanSchema, DateSchema, MixedSchema, NumberSchema, ObjectSchema, Schema, StringSchema, TupleSchema, ValidationError, addMethod, boolean, defaultLocale, getIn, isSchema, lazy, mixed, printValue, reach, ref, setLocale, tuple */
+/* unused harmony exports ArraySchema, BooleanSchema, DateSchema, MixedSchema, NumberSchema, ObjectSchema, Schema, StringSchema, TupleSchema, ValidationError, addMethod, bool, boolean, defaultLocale, getIn, isSchema, lazy, mixed, printValue, reach, ref, setLocale, tuple */
 /* harmony import */ var property_expr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! property-expr */ 41981);
 /* harmony import */ var property_expr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(property_expr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var tiny_case__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tiny-case */ 18956);
@@ -63889,8 +63878,8 @@ var CwformWebPart = /** @class */ (function (_super) {
                 msGraphClientFactory: this.context.msGraphClientFactory,
                 spHttpClient: this.context.spHttpClient,
             },
-            cdoaToDSMListURL: "https://livecareered.sharepoint.com/sites/Forms/Lists/CDOA%20to%20DSM%20Map/AllItems.aspx",
-            formList: "https://livecareered.sharepoint.com/sites/Forms/_api/web/lists/getbytitle('Cancel%20or%20Withdrawal%20Request%20Form%20Test')/items",
+            cdoaToDSMListURL: "https://livecareered.sharepoint.com/sites/AIU/Lists/CDOA%20to%20DSM%20Map/AllItems.aspx",
+            formList: "https://livecareered.sharepoint.com/sites/Forms/_api/web/Lists/getbytitle('Cancel%20or%20Withdrawal%20Request%20Form%20Test')/items",
         });
         react_dom__WEBPACK_IMPORTED_MODULE_1__.render(element, this.domElement);
     };
