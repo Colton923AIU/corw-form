@@ -80,64 +80,66 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
   });
   if (userData === null) return <>loading...</>;
 
+  const submitter = async (data: any) => {
+    if (!userData) return;
+    const CDOA = userData.filter(item => {
+      if (item.CDOA.Id === parseInt(data.CDOA)) {
+        return true;
+      }
+    })[0].CDOA;
+    const DSM = userData.filter(item => {
+      if (item.DSM.Title === data.DSM) {
+        return true;
+      }
+    })[0].DSM;
+    const validData: any = data;
+    validData.CDOANameId = CDOA.Id;
+    validData.CDSMId = DSM.Id;
+    validData.StudentID = data.StudentID;
+    const ret = await getUserIdByemail({
+      spHttpClient: spHttpClient,
+      email: data.AA_x002f_FAAdvisor[0].secondaryText,
+      formList: formList,
+    })
+      .then(data => {
+        return data.Id;
+      })
+      .catch(e => {
+        console.log('error: ', e);
+        return null;
+      });
+    validData.AA_x002f_FAAdvisorId = ret;
+
+    delete validData.CDOA;
+    delete validData.DSM;
+    delete validData.AA_x002f_FAAdvisor;
+    spHttpClient
+      .post(formList, SPHttpClient.configurations.v1, {
+        body: JSON.stringify(validData),
+      })
+      .then((response: any) => {
+        if (!response.ok) {
+          return response.json().then((err: any) => {
+            throw new Error(JSON.stringify(err));
+          });
+        }
+        return response.json();
+      })
+      .then((data: any) => {
+        setSubmitted(true);
+      })
+      .catch((error: any) => {
+        setSubmitted(false);
+        console.log('Fail:', error);
+      });
+  };
+
   return (
     <section className={styles.cwform}>
       <h2>{submitted ? 'Submitted' : 'Cancel / Withdrawal Form'}</h2>
       <form
         className={submitted ? styles.hidden : styles.visible}
-        onSubmit={handleSubmit(async data => {
-          if (!userData) return;
-          const CDOA = userData.filter(item => {
-            if (item.CDOA.Id === parseInt(data.CDOA)) {
-              return true;
-            }
-          })[0].CDOA;
-          const DSM = userData.filter(item => {
-            if (item.DSM.Title === data.DSM) {
-              return true;
-            }
-          })[0].DSM;
-          const validData: any = data;
-          validData.CDOANameId = CDOA.Id;
-          validData.CDSMId = DSM.Id;
-          validData.StudentID = data.StudentID;
-          const ret = await getUserIdByemail({
-            spHttpClient: spHttpClient,
-            email: data.AA_x002f_FAAdvisor[0].secondaryText,
-            formList: formList,
-          })
-            .then(data => {
-              return data.Id;
-            })
-            .catch(e => {
-              console.log('error: ', e);
-              return null;
-            });
-          validData.AA_x002f_FAAdvisorId = ret;
-
-          delete validData.CDOA;
-          delete validData.DSM;
-          delete validData.AA_x002f_FAAdvisor;
-          spHttpClient
-            .post(formList, SPHttpClient.configurations.v1, {
-              body: JSON.stringify(validData),
-            })
-            .then((response: any) => {
-              if (!response.ok) {
-                return response.json().then((err: any) => {
-                  throw new Error(JSON.stringify(err));
-                });
-              }
-              return response.json();
-            })
-            .then((data: any) => {
-              setSubmitted(true);
-            })
-            .catch((error: any) => {
-              setSubmitted(false);
-              console.log('Fail:', error);
-            });
-        })}
+        onSubmit={handleSubmit(submitter)}
       >
         <ControlledDropdown
           errorMessage={errors.CorW?.message}
@@ -149,7 +151,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
             { key: 'Withdrawal', text: 'Withdrawal' },
           ]}
           onChange={option => {
-            // setCorwState(option === 'Withdrawal' ? true : false)
             setValue('CorW', option);
           }}
         />
@@ -171,7 +172,6 @@ const Cwform: React.FC<ICwformWebPartProps> = ({
           name="StartDate"
           label="Current Start Date"
         />
-        {/* {corwState ? ( */}
         {watch('CorW') === 'Withdrawal' ? (
           <>
             <ControlledTextField
